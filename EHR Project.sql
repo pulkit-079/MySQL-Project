@@ -1,6 +1,4 @@
-
-/* How many rows of data are in the FactTable that include 
-	a Gross Charge greater than $100? */
+/*How many rows of data are in the FactTable that include a Gross Charge greater than $100?*/ 
 
 /*SELECT count(*) as Grosscharge
 FROM 
@@ -58,13 +56,8 @@ where ProviderSpecialty='Internal Medicine'
 group  by Month*/
 
 
-/*There are a two visit types that you have been asked
-	to compare (use CptDesc).
-		- Office/outpatient visit est
-		- Office/outpatient visit new
-	Show each CptCode, CptDesc and the assocaited CptUnits.
-	What is the Charge per CptUnit? (Reduce to two decimals)
-	What does this mean?*/
+/*Compare visit types (Office/outpatient visit est  and  Office/outpatient visit new). 
+ Show each CptCode, CptDesc, and the associated CptUnits.	What is the Charge per CptUnit? (Reduce to two decimals)*/
  
 /*SELECT 
 CptDesc, 
@@ -72,12 +65,12 @@ sum(CPTUnits)  as 'Total units',
 sum(GrossCharge) as 'Total charge',
 convert(sum(GrossCharge)/sum(CPTUnits),decimal (8,2)) as 'Charge/unit'
 from
- dimcptcode
- inner join facttable on
- facttable.dimCPTCodePK=dimcptcode.dimCPTCodePK
- where CptDesc='Office/outpatient visit est'  OR
- CptDesc= 'Office/outpatient visit new'
- group by CptDesc*/
+dimcptcode
+inner join facttable on
+facttable.dimCPTCodePK=dimcptcode.dimCPTCodePK
+where CptDesc='Office/outpatient visit est'  OR
+CptDesc= 'Office/outpatient visit new'
+group by CptDesc*/
 
 /*How many dollars have been written off (adjustments) due
 	to credentialing (AdjustmentReason)? Which location has the 
@@ -105,7 +98,7 @@ order by -sum(Adjustment) desc*/
 
 
 
-/*What is the average patientage by gender for patients
+/*What is the average patient age by gender for patients
 	seen at Big Heart Community Hospital with a Diagnosis
 	that included Type 2 diabetes? And how many Patients
 	are included in that average?*/
@@ -115,7 +108,7 @@ order by -sum(Adjustment) desc*/
     PatientGender,
     count(facttable.PatientNumber)  as 'No. of Patients',
     convert(avg(PatientAge), decimal(8,2))  as 'Avg patient age'
-	from
+	  from
     facttable
     inner join dimlocation  on
     facttable.dimLocationPK=dimlocation.dimLocationPK
@@ -141,12 +134,8 @@ order by -sum(Adjustment) desc*/
    
   
    
-    /*Analyze
-	the PaymentperUnit (NOT ChargeperUnit). You've been 
-	tasked with finding the PaymentperUnit by PayerName. 
-	Do this analysis on the following visit type (CptDesc)
-		- Initial hospital care
-	Show each CptCode, CptDesc and associated CptUnits.*/
+    /*Analyze	PaymentperUnit by PayerName for the following visit type (CptDesc)
+		- Initial hospital care.Show each CptCode, CptDesc and associated CptUnits.*/
     
     /*select
     sum(CPTUnits) as 'Total CPT units',
@@ -160,5 +149,5 @@ order by -sum(Adjustment) desc*/
     inner join dimcptcode on
     dimcptcode.dimCPTCodePK=facttable.dimCPTCodePK
     where CptDesc='Initial hospital care'
-group by PayerName, CptDesc*/
+    group by PayerName, CptDesc*/
 
